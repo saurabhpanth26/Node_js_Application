@@ -114,3 +114,16 @@ jobs:
                 service_name="my-node-service-studentXX"
                 existing_service=$(aws ecs describe-services --cluster my-node-student10 --services $service_name --query 'services[0].serviceName' --output text)
                 echo "service_exists=$existing_service" >> $GITHUB_ENV
+           - name: Create or update ECS service
+             run: |
+                if [[ "${{ env.service_exists }}" == "my-node-service-student10" ]]; then
+                    echo "Service already exists. Performing update..."
+                    latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student10 --query 'taskDefinition.revision')
+                    echo "Latest revision: $latest_revision"
+                    aws ecs update-service --cluster my-node-studentXX --service my-node-service-student10 --desired-count 1 --task-definition node-app-deploy-student10-:$latest_revision
+                else
+                    echo "Service does not exist. Creating a new service..."
+                    latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student10 --query 'taskDefinition.revision')
+                    echo "Latest revision: $latest_revision"
+                    aws ecs create-service --cluster my-node-student10 --service-name my-node-service-student10 --task-definition node-app-deploy-student10:$latest_revision --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-05c5ccd9e050bb958],securityGroups=[sg-07a819d5feeb0f816],assignPublicIp=ENABLED}"
+                fi
