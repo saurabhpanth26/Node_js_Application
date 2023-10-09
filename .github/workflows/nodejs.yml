@@ -84,4 +84,4 @@ jobs:
         steps:
            - name: Create ECS Cluster
              run: |
-                    aws ecs create-cluster --cluster-name my-node-student.10
+                    aws ecs create-cluster --cluster-name my-node-student10
