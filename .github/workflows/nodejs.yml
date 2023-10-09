@@ -111,7 +111,7 @@ jobs:
            - name: Check if ECS service exists
              id: check-service
              run: |
-                service_name="my-node-service-studentXX"
+                service_name="my-node-service-student10"
                 existing_service=$(aws ecs describe-services --cluster my-node-student10 --services $service_name --query 'services[0].serviceName' --output text)
                 echo "service_exists=$existing_service" >> $GITHUB_ENV
            - name: Create or update ECS service
