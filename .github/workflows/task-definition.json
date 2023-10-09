@@ -1,0 +1,41 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "node-app",
+            "image": "saurabhdevops.jfrog.io/my-jfrog-repository/my-node-app:latest",
+            "repositoryCredentials": {
+                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:340704870584:secret:student10-pMMAl6  "
+            },
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "containerPort": 3000,
+                    "hostPort": 3000,
+                    "protocol": "tcp"
+                }
+            ],
+            "essential": true,
+            "environment": [],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "ulimits": []
+        }
+    ],
+    "family": "node-app-deploy-student10",
+    "executionRoleArn": "arn:aws:iam::340704870584:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "2048",
+    "tags": [
+        {
+            "key": "Name",
+            "value": "my-node-app"
+        }
+    ]
+}
