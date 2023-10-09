@@ -120,7 +120,7 @@ jobs:
                     echo "Service already exists. Performing update..."
                     latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student10 --query 'taskDefinition.revision')
                     echo "Latest revision: $latest_revision"
-                    aws ecs update-service --cluster my-node-studentXX --service my-node-service-student10 --desired-count 1 --task-definition node-app-deploy-student10-:$latest_revision
+                    aws ecs update-service --cluster my-node-student10 --service my-node-service-student10 --desired-count 1 --task-definition node-app-deploy-student10-:$latest_revision
                 else
                     echo "Service does not exist. Creating a new service..."
                     latest_revision=$(aws ecs describe-task-definition --task-definition node-app-deploy-student10 --query 'taskDefinition.revision')
